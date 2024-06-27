@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { Link } from "react-router-dom";
@@ -7,12 +7,26 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        const storedEmail = localStorage.getItem('email');
+        const storedPassword = localStorage.getItem('password');
+        if (storedEmail) {
+            setEmail(storedEmail);
+        }
+        if (storedPassword) {
+            setPassword(storedPassword);
+        }
+    }, []);
+
     const handleSubmit = (event) => {
         event.preventDefault();
         localStorage.setItem('email', email);
         localStorage.setItem('password', password);
-        console.log('Email and password saved to local storage');
+        setEmail("")
+        setPassword("")
+        console.log('Passed');
     };
+
 
     return (
         <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
